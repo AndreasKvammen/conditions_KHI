@@ -9,7 +9,7 @@ The study investigates the formation and evolution of the Kelvin-Helmholtz (KH) 
 conditions in the Arctic ionosphere through plasma simulations. 
 
 <p align="center">
- <![](KHI.gif)>
+  <img src="KHI.gif" alt="animated" />
 </p>
 
 ## Repository Structure
