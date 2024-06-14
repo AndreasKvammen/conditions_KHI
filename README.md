@@ -31,12 +31,12 @@ functions.
 
 ## Running the Code
 1. Clone the repository to your local machine:
-git clone https://github.com/yourusername/kelvin-helmholtz-instability.git
+git clone https://github.com/yourusername/conditions_KHI.git
 
-2. Navigate to the desired figure folder:
+3. Navigate to the desired figure folder:
 cd conditions_KHI/source/Figure1
 
-3. Follow the instructions in the MATLAB script to run and generate the figure.
+4. Follow the instructions in the MATLAB script to run and generate the figure.
 
 ## Contact
 For questions or further information, please contact:
