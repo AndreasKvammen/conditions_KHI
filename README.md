@@ -8,6 +8,10 @@ This repository contains the data, source code, and supplementary materials for 
 The study investigates the formation and evolution of the Kelvin-Helmholtz (KH) instability under various
 conditions in the Arctic ionosphere through plasma simulations. 
 
+<p align="center">
+  <img src="KHI.gif" alt="animated" />
+</p>
+
 ## Repository Structure
 movies/: This folder contains movies of the simulations illustrating the development of KHI under different
 conditions. These movies are supplementary materials that visually demonstrate the findings discussed in
