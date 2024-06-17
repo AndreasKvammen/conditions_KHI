@@ -77,8 +77,15 @@ end
 
 %% 6 - Plot the perturbation strength
 subplot_tight(7, 3, [19 20 21], [sx, sy + 0.01])
+times = (0:10:(length(signal)-1) * 10);
+[saturation_threshold, threshold_crossing_time, param, fitted_signal, signal_log] = fitSigmoidAndFindSaturation(times, signal,0);
+
 yyaxis left
-plot((0:10:(length(signal)-1) * 10), signal, 'LineWidth', lw, 'color', [0, 0.4470, 0.7410])
+%figure
+h(1) = plot(times, signal, 'LineWidth', lw, 'color', [0, 0.4470, 0.7410]);
+hold on
+h(2) = scatter(times, 10.^(fitted_signal),100,'filled','MarkerFaceColor',[0.4660, 0.6740, 0.1880]);
+xline(threshold_crossing_time,'--k','LineWidth',lw)
 xlim([0 300])
 set(gca, 'yscale', 'log')
 set(gca, 'Ytick', [0.01 0.1 1])
@@ -93,14 +100,17 @@ yaxisproperties = get(gca, 'YAxis');
 yaxisproperties(1).TickLabelInterpreter = 'latex';
 set(gca, 'fontsize', fz)
 
+
 %% 7 - Calculate and plot the EW growth
 [signal] = pertubation_signal(nev);
 yyaxis right
 spatial = round(-idx);
-plot((0:10:(length(spatial)-1) * 10), spatial, 'LineWidth', lw, 'color', [0.6350, 0.0780, 0.1840])
+h(3) = plot(times, spatial, 'LineWidth', lw, 'color', [0.6350, 0.0780, 0.1840]);
 ylabel('EW extent [km]', 'interpreter', 'latex');
 text(10, 25, 's)', 'FontSize', fz, 'interpreter', 'latex');
 set(gca, 'ycolor', [0.6350, 0.0780, 0.1840])
 ylim([-2 30])
 yaxisproperties(2).TickLabelInterpreter = 'latex';
+legend([h(1) h(2) h(3)],'Pertubation','Fitted Sigmoid','Spatial growth','Position',[0.14    0.0719    0.1328    0.0631],'FontSize', fz, 'interpreter', 'latex');
 set(gca, 'fontsize', fz)
+
