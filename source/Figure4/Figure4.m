@@ -152,7 +152,7 @@ color_idx = round(norm_data * (size(cmap, 1) - 1)) + 1;
 scatter_colors = cmap(color_idx, :);
 % Create the scatter plot of observed values 
 scatter(l_lv/1e3, v_lv/1e3, mz, scatter_colors, 'filled','MarkerEdgeColor','k','LineWidth',lw);
-
+scatter(10,0.8, mz, 'filled','MarkerFaceColor',[0, 0.4470, 0.7410],'MarkerEdgeColor','k','LineWidth',lw);
 % Define axis and title properties  
 xlabel('$\ell$ [km]','interpreter','latex','FontSize',fz,'interpreter','latex')
 ylabel('$\Delta v$ [km/s]','interpreter','latex','FontSize',fz,'interpreter','latex')
@@ -192,6 +192,7 @@ color_idx = round(norm_data * (size(cmap, 1) - 1)) + 1;
 scatter_colors = cmap(color_idx, :);
 % Create the scatter plot
 scatter(l(n_idx)/1e3, v(n_idx)/1e3, mz, scatter_colors, 'filled','MarkerEdgeColor','k','LineWidth',lw);
+scatter([6 10],[0.8 0.8], mz, 'filled','MarkerFaceColor',[0, 0.4470, 0.7410],'MarkerEdgeColor','k','LineWidth',lw);
 
 % Define axis and title properties  
 xlabel('$\ell$ [km]','interpreter','latex','FontSize',fz)
@@ -280,6 +281,7 @@ color_idx = round(norm_data * (size(cmap, 1) - 1)) + 1;
 scatter_colors = cmap(color_idx, :);
 % Create the scatter plot
 scatter(v_vn/1e3, n_vn/1e11, mz, scatter_colors, 'filled','MarkerEdgeColor','k','LineWidth',lw);
+scatter([0.8 0.8],[5 10], mz, 'filled','MarkerFaceColor',[0, 0.4470, 0.7410],'MarkerEdgeColor','k','LineWidth',lw);
 
 % Define axis and title properties  
 xlabel('$\Delta v$ [km/s]','interpreter','latex','FontSize',fz)
