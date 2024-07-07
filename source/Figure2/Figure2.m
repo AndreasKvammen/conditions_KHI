@@ -42,7 +42,7 @@ for i = 1:length(idxx)
 
     % Set labels and properties for specific subplots
     if any(i == [1, 4, 7, 10, 13, 16])
-        ylabel('East [km]', 'interpreter', 'latex');
+        ylabel('y [km]', 'interpreter', 'latex');
         yaxisproperties = get(gca, 'YAxis');
         yaxisproperties.TickLabelInterpreter = 'latex';
     else
@@ -50,7 +50,7 @@ for i = 1:length(idxx)
     end
 
     if i > 15
-        xlabel('North [km]', 'interpreter', 'latex');
+        xlabel('x [km]', 'interpreter', 'latex');
         xaxisproperties = get(gca, 'XAxis');
         xaxisproperties.TickLabelInterpreter = 'latex';
     else
@@ -106,7 +106,7 @@ set(gca, 'fontsize', fz)
 yyaxis right
 spatial = round(-idx);
 h(3) = plot(times, spatial, 'LineWidth', lw, 'color', [0.6350, 0.0780, 0.1840]);
-ylabel('EW extent [km]', 'interpreter', 'latex');
+ylabel('y extent [km]', 'interpreter', 'latex');
 text(10, 25, 's)', 'FontSize', fz, 'interpreter', 'latex');
 set(gca, 'ycolor', [0.6350, 0.0780, 0.1840])
 ylim([-2 30])

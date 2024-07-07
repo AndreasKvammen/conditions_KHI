@@ -74,8 +74,8 @@ subplot_tight(3,2,1,[sx, sy])
 plot([0 1300],[0 1300],'k','LineWidth',lw)
 hold on
 scatter(y,y1_est,mz,'filled','color',[0.6350, 0.0780, 0.1840])
-xlabel('Observed $\tau$','Interpreter','latex','FontSize',fz)
-ylabel('Predicted $\tau$','Interpreter','latex','FontSize',fz)
+xlabel('Simulated $\tau_s$','Interpreter','latex','FontSize',fz)
+ylabel('Predicted $\tau_s$','Interpreter','latex','FontSize',fz)
 xlim([0 1300])
 ylim([0 1300])
 title('a) $\tau_1 = 115 ( \ell/ \Delta v)$ ','Interpreter','latex','FontWeight','normal')
@@ -92,8 +92,8 @@ subplot_tight(3,2,2,[sx, sy])
 plot([0 1300],[0 1300],'k','LineWidth',lw)
 hold on
 scatter(y,y2_est,mz,'filled','color',[0.6350, 0.0780, 0.1840])
-xlabel('Observed $\tau$','FontSize',fz,'Interpreter','latex')
-ylabel('Predicted $\tau$','FontSize',fz,'Interpreter','latex')
+xlabel('Simulated $\tau_s$','FontSize',fz,'Interpreter','latex')
+ylabel('Predicted $\tau_s$','FontSize',fz,'Interpreter','latex')
 xlim([0 1300])
 ylim([0 1300])
 title('b) $\tau_2 = 1/(\Delta v^2)(c_1 n_p + c_2 \ell) + c3 (\ell \Delta v^2)/n_p$','interpreter','latex','FontWeight','normal')
@@ -156,7 +156,7 @@ scatter(10,0.8, mz, 'filled','MarkerFaceColor',[0, 0.4470, 0.7410],'MarkerEdgeCo
 % Define axis and title properties  
 xlabel('$\ell$ [km]','interpreter','latex','FontSize',fz,'interpreter','latex')
 ylabel('$\Delta v$ [km/s]','interpreter','latex','FontSize',fz,'interpreter','latex')
-title('c) $\tau_1$ predictions of KH instability growth times','interpreter','latex','fontsize',fz,'FontWeight','normal')
+title('c) $\tau_1$ predictions of KHI saturation times','interpreter','latex','fontsize',fz,'FontWeight','normal')
 xaxisproperties= get(gca, 'XAxis');
 xaxisproperties.TickLabelInterpreter = 'latex'; % latex for x-axis
 yaxisproperties= get(gca, 'YAxis');
@@ -198,7 +198,7 @@ scatter([6 10],[0.8 0.8], mz, 'filled','MarkerFaceColor',[0, 0.4470, 0.7410],'Ma
 xlabel('$\ell$ [km]','interpreter','latex','FontSize',fz)
 ylabel('$\Delta v$ [km/s]','interpreter','latex','FontSize',fz)
 c = colorbar;
-c.Label.String = 'Logarithmic growth time [s]';
+c.Label.String = 'Logarithmic saturation time [s]';
 c.FontSize = fz;
 c.Label.Interpreter = 'latex';
 set(c,'TickLabelInterpreter','latex')
@@ -287,7 +287,7 @@ scatter([0.8 0.8],[5 10], mz, 'filled','MarkerFaceColor',[0, 0.4470, 0.7410],'Ma
 xlabel('$\Delta v$ [km/s]','interpreter','latex','FontSize',fz)
 ylabel('$n_p$ $[10^{11} \,\mathrm{m}^{-3}]$','interpreter','latex','FontSize',fz)
 c = colorbar;
-c.Label.String = 'Logarithmic growth time [s]';
+c.Label.String = 'Logarithmic saturation time [s]';
 c.FontSize = fz;
 c.Label.Interpreter = 'latex';
 set(c,'Position',[0.9319,0.07325,0.0157,0.233]);

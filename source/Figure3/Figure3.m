@@ -61,7 +61,7 @@ end
 for i = 19:21
    plot(timeKHI, KHI_growth(i, :), '--', 'Color', colors{i-18}, 'linewidth', lw)
 end
-title('a) perturbation strength for $\ell$ = 2 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
+title('a) Perturbation strength for $\ell$ = 2 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
 set(gca, 'fontsize', fz)
 legend({KHI{10:12}, KHI{1:3}, KHI{19:21}}, 'Interpreter', 'latex', 'Location', 'Southeast')
 grid on 
@@ -87,7 +87,7 @@ for i = 22:24
     plot(timeKHI, KHI_growth(i, :), '--', 'Color', colors{i-21}, 'linewidth', lw)
 end
 grid on
-title('c) perturbation strength for $\ell$ = 6 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
+title('c) Perturbation strength for $\ell$ = 6 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
 set(gca, 'XTickLabel', [])
 ylabel('Perturbation', 'Interpreter', 'latex', 'fontsize', fz)
 set(gca, 'YScale', 'log')
@@ -114,7 +114,7 @@ ylim([5e-3 3e0])
 grid on
 set(gca, 'YScale', 'log')
 ylabel('Perturbation', 'Interpreter', 'latex', 'fontsize', fz)
-title('e) perturbation strength for $\ell$ = 10 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
+title('e) Perturbation strength for $\ell$ = 10 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
 xlabel('Time [min]', 'Interpreter', 'latex', 'fontsize', fz)
 xaxisproperties= get(gca, 'XAxis');
 xaxisproperties.TickLabelInterpreter = 'latex';
@@ -146,9 +146,9 @@ end
 for i = 19:21
     plot(timeKHI, KHIspatial(i, :), '--', 'Color', colors{i-18}, 'linewidth', lw)
 end
-title('b) spatial growth for $\ell$ = 2 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
+title('b) Spatial growth for $\ell$ = 2 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
 ylim([0 220])
-ylabel('Extent EW [km]', 'Color', 'k', 'fontsize', fz, 'Interpreter', 'latex')
+ylabel('y extent [km]', 'Color', 'k', 'fontsize', fz, 'Interpreter', 'latex')
 set(gca, 'XTickLabel', [])
 ax = gca;
 ax.YAxis(1).Color = 'k';
@@ -176,8 +176,8 @@ for i = 22:24
 end
 ylim([0 220])
 grid on
-title('d) spatial growth for $\ell$ = 6 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
-ylabel('Extent EW [km]', 'Color', 'k', 'fontsize', fz, 'Interpreter', 'latex')
+title('d) Spatial growth for $\ell$ = 6 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
+ylabel('y extent[km]', 'Color', 'k', 'fontsize', fz, 'Interpreter', 'latex')
 set(gca, 'XTickLabel', [])
 ax = gca;
 ax.YAxis(1).Color = 'k';
@@ -205,9 +205,9 @@ for i = 25:27
 end
 ylim([0 220])
 grid on
-title('f) spatial growth for $\ell$ = 10 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
+title('f) Spatial growth for $\ell$ = 10 km', 'Interpreter', 'latex', 'fontsize', fz, 'FontWeight', 'normal')
 xlabel('Time [min]', 'fontsize', fz, 'Interpreter', 'latex')
-ylabel('Extent EW [km]', 'Color', 'k', 'fontsize', fz, 'Interpreter', 'latex')
+ylabel('y extent [km]', 'Color', 'k', 'fontsize', fz, 'Interpreter', 'latex')
 ax = gca;
 ax.YAxis(1).Color = 'k';
 ax.YAxis(2).Color = 'k';

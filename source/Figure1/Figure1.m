@@ -74,13 +74,13 @@ h(6) = plot3(x_karesuvanto / 1e3, y_karesuvanto / 1e3, 1, 's', 'color', C_karesu
 
 % Add legend and labels
 legend(h, {'Skibotn', 'Troms{\o}', 'Kiruna', 'Kaiseniemi', 'Sodankyl{\"a}', 'Karesuvanto'}, 'Location', [0.586, 0.321, 0.216, 0.143], 'Interpreter', 'latex', 'fontsize', fz);
-xlabel('East [km]', 'Interpreter', 'latex', 'fontsize', fz)
-ylabel('North [km]', 'Interpreter', 'latex', 'fontsize', fz)
-zlabel('Altitude [km]', 'Interpreter', 'latex', 'fontsize', fz)
+xlabel('x [km]', 'Interpreter', 'latex', 'fontsize', fz)
+ylabel('y [km]', 'Interpreter', 'latex', 'fontsize', fz)
+zlabel('z [km]', 'Interpreter', 'latex', 'fontsize', fz)
 set(gca, 'fontsize', fz)
 axis image
 c = colorbar;
-c.Label.String = 'Plasma density [$m^{-3}$]';
+c.Label.String = 'Density [$m^{-3}$]';
 c.Label.FontSize = fz;
 c.Label.Interpreter = 'latex';
 set(c, 'TickLabelInterpreter', 'latex')
