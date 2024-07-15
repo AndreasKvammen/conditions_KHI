@@ -2,8 +2,7 @@
 
 ## Overview
 This repository contains the data, source code, and supplementary materials for the research article titled
-"Conditions for the Kelvin-Helmholtz Instability in the Arctic Ionosphere" by A. Kvammen, A. Spicher,
- M. D. Zettergren, Devin Huyghebaert, Theresa Rexer, Björn Gustavsson, and Juha Vierinen.
+"Conditions for the Kelvin-Helmholtz Instability in the Polar Ionosphere" by Andreas Kvammen, Andres Spicher, Matthew Zettergren, Devin Huyghebaert, Theresa Rexer, Björn Gustavsson, and Juha Vierinen.
 
 The study investigates the formation and evolution of the Kelvin-Helmholtz (KH) instability under various
 conditions in the Arctic ionosphere through plasma simulations. 
