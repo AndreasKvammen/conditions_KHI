@@ -1,11 +1,33 @@
 %%% This script plots the KHI growth
 
 %% 1 - Define paths
-workpath = '/Users/akv020/Projects/conditions_KHI/source/Figure3';
+workpath = '/Users/akv020/Projects/Dataverse/source/figure3';
+res250path = '/Users/akv020/Projects/Dataverse/data/250m_resolution';
+res1000path = '/Users/akv020/Projects/Dataverse/data/1000m_resolution';
 
-%% 2 - Load data
-cd(workpath)
-load('pertubation_growth.mat')
+%% 2 - Load data and calculate pertubation growth
+cd(res250path)
+
+% find all 250 m resolution files 
+files = dir('*.nc');
+
+% exclude aurora files 
+files(endsWith({files.name},'_aurora_Q0.5.nc')) = [];
+files(endsWith({files.name},'_aurora_Q0.2.nc')) = [];
+
+% Loop over files to calculate pertubation growth 
+for i = 1:numel(files)
+
+    cd(res250path)
+    nev = ncread(files(i).name,'ne');
+
+    % Needed for plotting horizontally 
+    nev = permute(nev, [2, 1, 3]);
+
+    % Use Equation 5 of the article to calculate the perturbation growth
+    cd(workpath)
+    KHI_growth(i, :) = pertubation_signal(nev);
+end
 
 %% 3 - Define data arrays
 timeKHI = linspace(0, 30, 181);
@@ -122,11 +144,33 @@ yaxisproperties= get(gca, 'YAxis');
 yaxisproperties.TickLabelInterpreter = 'latex';
 set(gca,'FontSize',fz)
 
-%% 6 - Define simulation markers for spatial growth
-load('spatial_growth.mat')
+%% 6 - Calculate spatial growht 
+cd(res1000path)
+
+% find all 250 m resolution files 
+files = dir('*.nc');
+
+% exclude aurora files 
+files(endsWith({files.name},'_aurora_Q0.5.nc')) = [];
+files(endsWith({files.name},'_aurora_Q0.2.nc')) = [];
+
+% Loop over files to calculate pertubation growth 
 for i = 1:numel(files)
-    KHIspatial(i, :) = round(-idx(i, :));
+
+    cd(res1000path)
+    nev = ncread(files(i).name,'ne');
+    y = ncread(files(i).name,'y');
+    % Needed for plotting horizontally 
+    nev = permute(nev, [2, 1, 3]);
+
+    % Use Equation 5 of the article to calculate the perturbation growth
+    cd(workpath)
+    KHIspatial(i, :) = y_distance(nev,y,0.1);
 end
+% load('spatial_growth.mat')
+% for i = 1:numel(files)
+%     KHIspatial(i, :) = round(-idx(i, :));
+% end
 
 %% 7 - Plot spatial growth
 % Subplot for spatial growth for l = 2 km

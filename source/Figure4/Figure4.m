@@ -1,7 +1,8 @@
 %%% This script visualize the linear and non-linear preddictions of tau
 
 %% 1 - Define paths
-workpath = '/Users/akv020/Projects/conditions_KHI/source/Figure4';
+workpath = '/Users/akv020/Projects/Dataverse/source/figure4';
+datapath = '/Users/akv020/Projects/Dataverse/data/250m_resolution';
 
 %% 2 - Define data
 % Define the parameter values
@@ -10,24 +11,70 @@ l = [2, 6, 10]*1e3;
 n = [1e11, 5e11, 10e11];
 
 % Generate all combinations of parameters
-[V, N, L] = ndgrid(v, n, l);
+[V, N, L] = ndgrid(v, l, n);
 params = [V(:), L(:), N(:)];
 
-% Define the output data
-y = [5.0, 3.2, 2.2, 8.0, 4.0, 2.3, 12.3, ...
-    4.7, 2.3, 20.8, 10.3, 6.2, NaN, 10.8, ...
-    5.3, NaN, 10.2, 5.2, NaN, 12.2, 9.3, ...
-    NaN, 13.7, 7.7, NaN, 12.2, 7.0]'*60;
+%% 3 - Calculate saturation time
+% find all 250 m resolution files 
+cd(datapath)
+files = dir('*.nc');
+
+% exclude aurora files 
+files(endsWith({files.name},'_aurora_Q0.5.nc')) = [];
+files(endsWith({files.name},'_aurora_Q0.2.nc')) = [];
+
+% loop over all files
+for i = 1:numel(files)
+    cd(datapath)
+    nev = ncread(files(i).name,'ne');
+    nev = permute(nev,[2 1 3]);
+    filename = files(i).name;
+    if str2num(filename(1)) == 5
+        if str2num(filename(13)) == 8 && str2num(filename(12)) == 0
+            KHIstring = ['$n_p = 5 \times 10^{11}$', ' $\Delta V$ = 0.', num2str(str2num(filename(13))), ' km/s'];
+        else
+            KHIstring = ['$n_p = 5 \times 10^{11}$', ' $\Delta V$ = ', num2str(str2num(filename(12))),'.',num2str(str2num(filename(13))), ' km/s'];
+        end
+    elseif str2num(filename(4)) == 1
+        if str2num(filename(11)) == 8 && str2num(filename(10)) == 0
+            KHIstring = ['$n_p = 1 \times 10^{11}$', ' $\Delta V$ = 0.', num2str(str2num(filename(12))),'.',num2str(str2num(filename(11))), ' km/s'];
+        else
+            KHIstring = ['$n_p = 1 \times 10^{11}$', ' $\Delta V$ = ', num2str(str2num(filename(11))),'.',num2str(str2num(filename(12))), ' km/s'];
+        end
+    else
+        if str2num(filename(11)) == 8 && str2num(filename(10)) == 0
+            KHIstring = ['$n_p = 1 \times 10^{12}$', ' $\Delta V$ = 0.', num2str(str2num(filename(12))),'.',num2str(str2num(filename(11))), ' km/s'];
+        else
+            KHIstring = ['$n_p = 1 \times 10^{12}$', ' $\Delta V$ = ', num2str(str2num(filename(11))),'.',num2str(str2num(filename(12))), ' km/s'];
+        end
+    end
+
+    KHI{i} = KHIstring;
+    cd(workpath)
+    % Calculate the saturation treshold and time of crossing
+    [saturation_threshold, threshold_crossing_time, param] = saturation_finder(nev,0);
+    if saturation_threshold > 1
+        name{i} = files(i).name;
+        ts(i) = threshold_crossing_time;
+    else 
+        name{i} = files(i).name;
+        ts(i) = NaN;
+    end
+
+end
+
+% needed since names are not in increasing order
+ts_order = [ts(10:18), ts(1:9), ts(19:end)];
 
 % Remove NaN values
-valid_indices = ~isnan(y);
+valid_indices = ~isnan(ts_order);
 params = params(valid_indices, :);
-y = y(valid_indices);
+y = ts_order(valid_indices)';
 
 % Extract parameter values
 v = params(:, 1);
-l = params(:, 2);
-n = params(:, 3);
+n = params(:, 2);
+l = params(:, 3);
 
 %% 3 - Calculate predicted values
 % Calculate estimated outputs using the first equation
@@ -79,7 +126,7 @@ ylabel('Predicted $\tau_s$','Interpreter','latex','FontSize',fz)
 xlim([0 1300])
 ylim([0 1300])
 title('a) $\tau_1 = 115 ( \ell/ \Delta v)$ ','Interpreter','latex','FontWeight','normal')
-legend(['$\mathrm{R}^2$ = 0.641', newline, 'RMSE = 162 s'],'Simualtions','Location','northwest','FontSize',fz,'interpreter','latex')
+legend(['$\mathrm{R}^2$ = ',num2str(round(r2_y1,3)), newline, 'RMSE = ',num2str(round(rmse_y1)), ' s'],'Simualtions','Location','northwest','FontSize',fz,'interpreter','latex')
 grid on
 xaxisproperties= get(gca, 'XAxis');
 xaxisproperties.TickLabelInterpreter = 'latex'; % latex for x-axis
@@ -97,7 +144,7 @@ ylabel('Predicted $\tau_s$','FontSize',fz,'Interpreter','latex')
 xlim([0 1300])
 ylim([0 1300])
 title('b) $\tau_2 = 1/(\Delta v^2)(c_1 n_p + c_2 \ell) + c3 (\ell \Delta v^2)/n_p$','interpreter','latex','FontWeight','normal')
-legend(['$\mathrm{R}^2$ = 0.944', newline, 'RMSE = 63.8 s'],'Simualtions','Location','northwest','FontSize',fz,'interpreter','latex')
+legend(['$\mathrm{R}^2$ = ',num2str(round(r2_y2,3)), newline, 'RMSE = ',num2str(round(rmse_y2,1)), ' s'],'Simualtions','Location','northwest','FontSize',fz,'interpreter','latex')
 grid on
 xaxisproperties= get(gca, 'XAxis');
 xaxisproperties.TickLabelInterpreter = 'latex'; % latex for x-axis
@@ -125,11 +172,11 @@ contour_levels = (1.7:0.2:3.1);
 [L, V] = meshgrid(l_range, v_range);
 
 % Predict y1_est as a function of l and v for n = 1e11 (most points) for y1 predictions
-y1_idx = [(1:3),(10:12),(17:18)]; 
+[n_fixed_idx] = find(n == 1e11);
 y1_est_lv = 115.4 * (L ./ V);
-y1_lv = y(y1_idx);
-l_lv = l(y1_idx);
-v_lv = v(y1_idx);
+y1_lv = y(n_fixed_idx);
+l_lv = l(n_fixed_idx);
+v_lv = v(n_fixed_idx);
 
 % Plot first for t1 predictions
 subplot_tight(3,2,3,[sx, sy])
@@ -166,8 +213,8 @@ set(gca,'fontsize',fz)
 %% 9 - Visualize model over the considered ranges for t2 as a function of l and v with n fixed
 
 % Get obsevred values 
-n_idx = [(4:6),13,14,19,20]; % Define indexes with n = 5e11 for y2 predictions 
-y2_lv = y(n_idx); % 
+[n_fixed_idx] = find(n == 5e11); % Define indexes with n = 5e11 for y2 predictions 
+y2_lv = y(n_fixed_idx); % 
 
 % Get predicted values t2
 [L, V] = meshgrid(l_range, v_range);
@@ -191,7 +238,7 @@ norm_data(norm_data > 1) = 1;
 color_idx = round(norm_data * (size(cmap, 1) - 1)) + 1;
 scatter_colors = cmap(color_idx, :);
 % Create the scatter plot
-scatter(l(n_idx)/1e3, v(n_idx)/1e3, mz, scatter_colors, 'filled','MarkerEdgeColor','k','LineWidth',lw);
+scatter(l(n_fixed_idx)/1e3, v(n_fixed_idx)/1e3, mz, scatter_colors, 'filled','MarkerEdgeColor','k','LineWidth',lw);
 scatter([6 10],[0.8 0.8], mz, 'filled','MarkerFaceColor',[0, 0.4470, 0.7410],'MarkerEdgeColor','k','LineWidth',lw);
 
 % Define axis and title properties  
@@ -213,7 +260,7 @@ set(gca,'fontsize',fz)
 %% 10 - Visualize model over the considered ranges for t2 as a function of l and n with v fixed
 
 % Get obsevred values 
-v_idx = [2,5,8,11,13,15,17,19,21];
+[v_idx] = find(v == 1300); % Define indexes with v = 1.3 km/s for y2 predictions 
 y2_ln = y(v_idx);
 l_ln = l(v_idx);
 n_ln = n(v_idx);
@@ -254,7 +301,7 @@ set(gca,'fontsize',fz)
 %% 11 - Visualize model over the considered ranges for t2 as a function of v and n with l fixed
 
 % Get obsevred values 
-l_idx = (10:16);
+[l_idx] = find(l == 6000); % Define indexes with l = 6 km for y2 predictions 
 y2_vn = y(l_idx);
 v_vn = v(l_idx);
 n_vn = n(l_idx);

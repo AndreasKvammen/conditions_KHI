@@ -1,8 +1,10 @@
 %%% This Script draws the GEMINI modeling volume 
 
+%% 0 - Define path to "figure1"
+workpath = '/Users/akv020/Projects/Dataverse/source/figure1';
+cd(workpath)
+
 %% 1 - Define coordinates for relevant cities
-% Define workpath
-workpath = '/Users/akv020/Projects/conditions_KHI/source/Figure1';
 
 % Define coordinates for relevant cities
 skibotn = [69.38976025279854, 20.266842112064637];
@@ -33,10 +35,13 @@ C_sodankyla = [0, 0.4470, 0.7410];
 C_karesuvanto = [0.7410, 0.4470, 0.1880];
 
 %% 2 - Load data
-cd(workpath)
-load('ne3lowres.mat')
-VNE = log10(permute(nev, [2, 1, 3]));
-[X, Y, Z] = meshgrid(east, nort, alti);
+x = ncread("ne_3d_sample.nc","x");
+y = ncread("ne_3d_sample.nc","y");
+z = ncread("ne_3d_sample.nc","z");
+ne = ncread("ne_3d_sample.nc","ne");
+
+VNE = log10(permute(ne, [2, 1, 3]));
+[X, Y, Z] = meshgrid(x, y, z);
 
 %% 3 - Draw modelling volume
 FIG = figure('units', 'centimeters', 'position', [0, 0, 25.0, 37.0]);
@@ -48,7 +53,7 @@ cmin = log10(4e10);
 cmax = log10(8e11);
 
 % Plot the volume slice
-slice(X, Y, Z, VNE, east(1), nort(512), alti(24))
+slice(X, Y, Z, VNE, x(1), x(512), z(24))
 colormap(inferno)
 shading flat
 hold on

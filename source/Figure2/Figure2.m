@@ -1,29 +1,44 @@
 %%% This script plots the evolution of the fastest simulation
 
 %% 1 - Define paths
-workpath = '/Users/akv020/Projects/conditions_KHI/source/Figure2';
+workpath = '/Users/akv020/Projects/Dataverse/source/figure2';
+datapath = '/Users/akv020/Projects/Dataverse/data/250m_resolution';
 
 %% 2 - Load data
-cd(workpath)
-load('Ne11_L02_V18.mat')
+cd(datapath)
+x = ncread('Ne11_L02_V18.nc','x');
+y = ncread('Ne11_L02_V18.nc','y');
+t = ncread('Ne11_L02_V18.nc','t');
+nev = ncread('Ne11_L02_V18.nc','ne');
+
+% Needed for plotting horizontally 
+nev = permute(nev, [2, 1, 3]);
 
 %% 3 - Define times to plot
-[signal] = pertubation_signal(nev);
+% Define interesting times 
 idxx = 7:24;
 
+cd(workpath)
+% Use Equation 5 in article
+[perturbation] = pertubation_signal(nev);
+
 %% 4 - Estimate spatial growth
-for i = 1:31
+tstop = 300; 
+istop = tstop/10 +1;
+for i = 1:istop
     vne = nev(:,:,i);
     dne = max(vne, [], 2) - min(vne, [], 2);
     nemax = max(vne(:));
     nemin = min(vne(:));
+
+    % Use Equation 6 in article 
     ne_th = (nemax - nemin) * 0.1;
     idxs = find(dne > ne_th);
 
     if isempty(idxs)
-        idx(i) = east(round(length(east)/2));
+        idx(i) = y(round(length(y)/2));
     else
-        idx(i) = east(idxs(1));
+        idx(i) = y(idxs(1));
     end
 end
 
@@ -38,7 +53,7 @@ alf = 'a':'z';
 
 for i = 1:length(idxx)
     subplot_tight(7, 3, i, [sx, sy])
-    imagesc(nort, east, log10(squeeze(nev(:,:,idxx(i)))))
+    imagesc(x, y, log10(squeeze(nev(:,:,idxx(i)))))
 
     % Set labels and properties for specific subplots
     if any(i == [1, 4, 7, 10, 13, 16])
@@ -77,12 +92,12 @@ end
 
 %% 6 - Plot the perturbation strength
 subplot_tight(7, 3, [19 20 21], [sx, sy + 0.01])
-times = (0:10:(length(signal)-1) * 10);
-[saturation_threshold, threshold_crossing_time, param, fitted_signal, signal_log] = fitSigmoidAndFindSaturation(times, signal,0);
+times = (0:10:(length(perturbation)-1) * 10);
+[saturation_threshold, threshold_crossing_time, param, fitted_signal, signal_log] = fitSigmoidAndFindSaturation(times, perturbation,0);
 
 yyaxis left
 %figure
-h(1) = plot(times, signal, 'LineWidth', lw, 'color', [0, 0.4470, 0.7410]);
+h(1) = plot(times, perturbation, 'LineWidth', lw, 'color', [0, 0.4470, 0.7410]);
 hold on
 h(2) = scatter(times, 10.^(fitted_signal),100,'filled','MarkerFaceColor',[0.4660, 0.6740, 0.1880]);
 xline(threshold_crossing_time,'--k','LineWidth',lw)
@@ -102,10 +117,10 @@ set(gca, 'fontsize', fz)
 
 
 %% 7 - Calculate and plot the EW growth
-[signal] = pertubation_signal(nev);
+[perturbation] = pertubation_signal(nev);
 yyaxis right
 spatial = round(-idx);
-h(3) = plot(times, spatial, 'LineWidth', lw, 'color', [0.6350, 0.0780, 0.1840]);
+h(3) = plot(times(1:istop), spatial, 'LineWidth', lw, 'color', [0.6350, 0.0780, 0.1840]);
 ylabel('y extent [km]', 'interpreter', 'latex');
 text(10, 25, 's)', 'FontSize', fz, 'interpreter', 'latex');
 set(gca, 'ycolor', [0.6350, 0.0780, 0.1840])
