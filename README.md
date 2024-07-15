@@ -18,15 +18,25 @@ the article.
 
 source/: This folder includes the source code and data necessary to reproduce the figures presented in the
 article. The folder is further organized into subfolders corresponding to each figure.
-- Figure1/: Contains the data and scripts to reproduce Figure 1 of the article.
-- Figure2/: Contains the data and scripts to reproduce Figure 2 of the article.
-- Figure3/: Contains the data and scripts to reproduce Figure 3 of the article.
-- Figure4/: Contains the data and scripts to reproduce Figure 4 of the article.
-- Figure5/: Contains the data and scripts to reproduce Figure 5 of the article.
-
+- figure1/: Contains the data and scripts to reproduce Figure 1 of the article.
+- figure2/: Contains the data and scripts to reproduce Figure 2 of the article.
+- figure3/: Contains the data and scripts to reproduce Figure 3 of the article.
+- figure4/: Contains the data and scripts to reproduce Figure 4 of the article.
+- figure5/: Contains the data and scripts to reproduce Figure 5 of the article.
+- initialize_250m_resolution/: Contains the code to initialize GEMINI with various initial conditions and 250 m horizontal resolution.
+- initialize_1000m_resolution/: Contains the code to initialize GEMINI with various initial conditions and 1000 m horizontal resolution.
+   
 ## Getting Started
 To reproduce the figures from the article, navigate to the appropriate subfolder in the source/ directory
 and run the provided scripts using MATLAB.
+
+To set up the GEMINI simulation, use: gemini3d.model.setup("config.nml","output directory name") where the config.nml is in the initialization folder (e.g. Ne11_L06_V13)
+
+GEMINI can then be run in a command window using the command: mpiexec -np build/gemini.bin
+
+for example: mpiexec -np 64 build/gemini.bin home/simulations/Ne11_L06_V13/
+
+For more information on how to set up GEMINI, please visit: https://github.com/gemini3d
 
 ## Prerequisites
 Ensure you have MATLAB 2022b installed. The scripts may also require additional MATLAB toolboxes or
