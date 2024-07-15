@@ -1,4 +1,5 @@
 # Conditions for the Kelvin-Helmholtz Instability in the Polar Ionosphere
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12745574.svg)](https://doi.org/10.5281/zenodo.12745574)
 
 ## Overview
 This repository contains the data, source code, and supplementary materials for the research article titled
